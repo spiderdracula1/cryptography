@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Азбука Морзе</title>
+<style>
+
+h1 {
+    text-align: center;
+    color: #eee8d5;
+}
+
+input[type="text"] {
+    width: 80%;
+    font-size: 16px;
+    padding: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    text-align: center;
+}
+div {
+    color: #eee8d5;
+    margin: 10px 0;
+}
+#res {
+    font-size: 1.2em;
+    font-family: monospace;
+}
+</style>
+
+
+</head>
+<body>
+
+<h1>АЗБУКА МОРЗЕ</h1>
+
+<input type="text" id="txt" value="Привет">
+
+<div class="center">
+    <input type="button" id="create" value="Перевести">
+</div>
+
+<div class="center">
+    Результат = <span id="res"></span>
+</div>
+
+<script>
+var morse = {
+    'А': '.-', 'Б': '-...', 'В': '.--', 'Г': '--.', 'Д': '-..',
+    'Е': '.', 'Ё': '.', 'Ж': '...-', 'З': '--..', 'И': '..',
+    'Й': '.---', 'К': '-.-', 'Л': '.-..', 'М': '--', 'Н': '-.',
+    'О': '---', 'П': '.--.', 'Р': '.-.', 'С': '...', 'Т': '-',
+    'У': '..-', 'Ф': '..-.', 'Х': '....', 'Ц': '-.-.', 'Ч': '---.',
+    'Ш': '----', 'Щ': '--.-', 'Ъ': '.--.-.', 'Ы': '-.--', 'Ь': '-..-',
+    'Э': '..-..', 'Ю': '..--', 'Я': '.-.-',
+    'а': '.-', 'б': '-...', 'в': '.--', 'г': '--.', 'д': '-..',
+    'е': '.', 'ё': '.', 'ж': '...-', 'з': '--..', 'и': '..',
+    'й': '.---', 'к': '-.-', 'л': '.-..', 'м': '--', 'н': '-.',
+    'о': '---', 'п': '.--.', 'р': '.-.', 'с': '...', 'т': '-',
+    'у': '..-', 'ф': '..-.', 'х': '....', 'ц': '-.-.', 'ч': '---.',
+    'ш': '----', 'щ': '--.-', 'ъ': '.--.-.', 'ы': '-.--', 'ь': '-..-',
+    'э': '..-..', 'ю': '..--', 'я': '.-.-'
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var rStr = ''
+    for (let k = 0; k < t.length; k++) {
+        let ch = t[k]
+        let code = morse[ch]
+        if (code == undefined) {
+            code = ch
+        }
+        rStr = rStr + code + ' '
+    }
+    document.getElementById('res').textContent = rStr.trim()
+}
+
+document.querySelector('#create').onclick = go;
+</script>
+
+</body>
+</html>

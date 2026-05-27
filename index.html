@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Криптография</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="css/custom.css" id="theme">
+		<!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="center">
+					<h1 style="font-size: 3.65em;">Криптография</h1>
+				</section>
+				<section data-markdown="markdown/cryptography.md"></section>
+				<section data-markdown="markdown/caesar.md"></section>
+				<section data-markdown="markdown/Caesar_cipher.md" data-menu-title="Определние"></section>
+				<section data-markdown="markdown/caesar_expl.md" data-menu-title="Пример шифра"></section>
+				<section
+				data-menu-title="пример работы">
+					<h3>пример в работы шифра</h3>
+					<img src="img/Caesar3.svg.png" alt="пример в работы шифра" height="400px">
+				</section>
+				<section data-menu-title="Шифр цезаря"
+				data-fullscreen>
+					<iframe data-src="html/Caesar_cipher.html" frameborder="0" class="stretch"></iframe>
+				</section>
+				<section data-markdown="markdown/The_knapsack_problem.md"></section>
+				<section data-markdown="markdown/staging.md" ></section>
+				<section
+				data-menu-title="Визуальный пример">
+				<h3>визуальный пример задачи</h3>
+				<img src="img/c8ykxjgyfsh4aqnjn5hv7h5zqny.png" alt="визуальный пример задачи" height="400px">
+			</section>
+				<section data-markdown="markdown/Merkle-Hellman.md"></section>
+				<section data-markdown="markdown/Merkle-Hellman_discription.md"></section>
+				<section data-markdown="markdown/exmpl.md"></section>
+				<section>
+					<section data-markdown="markdown/Merkle-Hellman_expl.md"></section>
+					<section data-markdown="markdown/Merkle-Hellman_expl1.md"></section>
+				</section>
+				<section data-markdown="markdown/Merkle-Hellman_expl2.md" data-markdown style="font-size: 95%;"></section>
+				<section>
+					<section data-markdown="markdown/Merkle-Hellman_expl3.md"></section>
+					<section data-markdown="markdown/Merkle-Hellman_expl4.md" data-markdown style="font-size: 80%;"></section>
+				</section>
+				
+				<section data-menu-title="Ранцевый алгоритм шифрования"
+				data-fullscreen>
+					<iframe data-src="html/knapsack.html" frameborder="0" class="stretch"></iframe>
+				</section>
+				<section data-menu-title="Ранцевый алгоритм шифрования"
+				data-fullscreen>
+					<iframe data-src="html/knapsack_decrypt.html" frameborder="0" class="stretch"></iframe>
+				</section>
+				<section data-markdown="markdown/morse.md"></section>
+				<section data-markdown="markdown/morse1.md"></section>
+				<section
+				data-menu-title="азбука морзе на русском">
+				<h3>азбука морзе на русском</h3>
+				<img src="img/8798959086.jpg" alt="азбука Морзе русская" height="400px">
+			</section>
+
+			<section data-menu-title="Перевод на азбуку Морзе"
+			data-fullscreen>
+				<iframe data-src="html/tomorse.html" frameborder="0" class="stretch"></iframe>
+			</section>
+			<section data-menu-title="Перевод с азбуки Морзе"
+			data-fullscreen>
+				<iframe data-src="html/morse.html" frameborder="0" class="stretch"></iframe>
+			</section>
+			<section data-menu-title="Исходный код" data-fullscreen>
+				Исходный код
+				<pre><code class="javascript">
+// шифр цезаря
+const abc = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789 ,.?'
+const n = 47
+
+function go() {
+    let t = document.getElementById('txt').value
+    let s = parseInt(document.getElementById('sh').value) || 0
+    let r = ''
+    for (let i = 0; i < t.length; i++) {
+        let p = abc.indexOf(t[i])
+        if (p == -1) {
+            r += t[i]
+        } else {
+            r += abc[(p + s + n) % n]
+        }
+    }
+    document.getElementById('res').value = r
+}
+
+document.querySelector('#create').onclick = go;
+
+
+// Ранцевый метод кодирвание
+
+var W = [1,2,4,8,16,32,64,128]
+var q = 257
+var r = 3
+
+var B = []
+for (let i = 0; i < W.length; i++) {
+    B[i] = (W[i] * r) % q
+}
+
+var koi8 = {
+    'А':225,'Б':226,'В':247,'Г':231,'Д':228,'Е':229,'Ё':163,
+    'Ж':246,'З':250,'И':233,'Й':234,'К':235,'Л':236,'М':237,
+    'Н':238,'О':239,'П':240,'Р':242,'С':243,'Т':244,'У':245,
+    'Ф':230,'Х':232,'Ц':227,'Ч':254,'Ш':251,'Щ':253,'Ъ':255,
+    'Ы':249,'Ь':248,'Э':252,'Ю':224,'Я':241,
+    'а':193,'б':194,'в':215,'г':199,'д':196,'е':197,'ё':179,
+    'ж':214,'з':218,'и':201,'й':202,'к':203,'л':204,'м':205,
+    'н':206,'о':207,'п':208,'р':210,'с':211,'т':212,'у':213,
+    'ф':198,'х':200,'ц':195,'ч':222,'ш':219,'щ':221,'ъ':223,
+    'ы':217,'ь':216,'э':220,'ю':192,'я':209
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var rStr = ''
+    for (let k = 0; k < t.length; k++) {
+        let ch = t[k]
+        let code = ch.charCodeAt(0)
+        if (code > 127) {
+            code = koi8[ch]
+            if (code == undefined) {
+                code = 63
+            }
+        }
+        let sum = 0
+        for (let i = 0; i < 8; i++) {
+            if ((code >> (7 - i)) & 1) {
+                sum = sum + B[i]
+            }
+        }
+        rStr = rStr + String.fromCharCode(sum % q)
+    }
+    document.getElementById('res').textContent = rStr
+}
+
+document.querySelector('#create').onclick = go;
+
+
+// ранецевый метод декодрование
+var koi8 = {
+    'А':225,'Б':226,'В':247,'Г':231,'Д':228,'Е':229,'Ё':163,
+    'Ж':246,'З':250,'И':233,'Й':234,'К':235,'Л':236,'М':237,
+    'Н':238,'О':239,'П':240,'Р':242,'С':243,'Т':244,'У':245,
+    'Ф':230,'Х':232,'Ц':227,'Ч':254,'Ш':251,'Щ':253,'Ъ':255,
+    'Ы':249,'Ь':248,'Э':252,'Ю':224,'Я':241,
+    'а':193,'б':194,'в':215,'г':199,'д':196,'е':197,'ё':179,
+    'ж':214,'з':218,'и':201,'й':202,'к':203,'л':204,'м':205,
+    'н':206,'о':207,'п':208,'р':210,'с':211,'т':212,'у':213,
+    'ф':198,'х':200,'ц':195,'ч':222,'ш':219,'щ':221,'ъ':223,
+    'ы':217,'ь':216,'э':220,'ю':192,'я':209
+}
+
+var koi8Inv = {}
+for (let ch in koi8) {
+    koi8Inv[koi8[ch]] = ch
+}
+
+function modInv(a, m) {
+    var m0 = m
+    var x0 = 0
+    var x1 = 1
+    if (m == 1) return 0
+    while (a > 1) {
+        let qq = Math.floor(a / m)
+        let t = m
+        m = a % m
+        a = t
+        t = x0
+        x0 = x1 - qq * x0
+        x1 = t
+    }
+    if (x1 < 0) x1 += m0
+    return x1
+}
+
+function go() {
+    var q = parseInt(document.getElementById('q').value)
+    var r = parseInt(document.getElementById('r').value)
+    var wStr = document.getElementById('w').value
+    var enc = document.getElementById('enc').value
+
+    var W = wStr.split(',').map(Number)
+    var rInv = modInv(r, q)
+    var B = []
+    for (let i = 0; i < W.length; i++) {
+        B[i] = (W[i] * r) % q
+    }
+
+    var rStr = ''
+    for (let k = 0; k < enc.length; k++) {
+        let c = enc.charCodeAt(k)
+        let cp = (c * rInv) % q
+        let code = 0
+        for (let i = W.length - 1; i >= 0; i--) {
+            if (cp >= W[i]) {
+                code = code | (1 << (W.length - 1 - i))
+                cp = cp - W[i]
+            }
+        }
+        if (code > 127 && koi8Inv[code]) {
+            rStr += koi8Inv[code]
+        } else {
+            rStr += String.fromCharCode(code)
+        }
+    }
+    document.getElementById('res').textContent = rStr
+}
+
+document.querySelector('#create').onclick = go;
+
+
+//Перевод на азбуку Морзе
+
+var morse = {
+    'А': '.-', 'Б': '-...', 'В': '.--', 'Г': '--.', 'Д': '-..',
+    'Е': '.', 'Ё': '.', 'Ж': '...-', 'З': '--..', 'И': '..',
+    'Й': '.---', 'К': '-.-', 'Л': '.-..', 'М': '--', 'Н': '-.',
+    'О': '---', 'П': '.--.', 'Р': '.-.', 'С': '...', 'Т': '-',
+    'У': '..-', 'Ф': '..-.', 'Х': '....', 'Ц': '-.-.', 'Ч': '---.',
+    'Ш': '----', 'Щ': '--.-', 'Ъ': '.--.-.', 'Ы': '-.--', 'Ь': '-..-',
+    'Э': '..-..', 'Ю': '..--', 'Я': '.-.-',
+    'а': '.-', 'б': '-...', 'в': '.--', 'г': '--.', 'д': '-..',
+    'е': '.', 'ё': '.', 'ж': '...-', 'з': '--..', 'и': '..',
+    'й': '.---', 'к': '-.-', 'л': '.-..', 'м': '--', 'н': '-.',
+    'о': '---', 'п': '.--.', 'р': '.-.', 'с': '...', 'т': '-',
+    'у': '..-', 'ф': '..-.', 'х': '....', 'ц': '-.-.', 'ч': '---.',
+    'ш': '----', 'щ': '--.-', 'ъ': '.--.-.', 'ы': '-.--', 'ь': '-..-',
+    'э': '..-..', 'ю': '..--', 'я': '.-.-'
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var rStr = ''
+    for (let k = 0; k < t.length; k++) {
+        let ch = t[k]
+        let code = morse[ch]
+        if (code == undefined) {
+            code = ch
+        }
+        rStr = rStr + code + ' '
+    }
+    document.getElementById('res').textContent = rStr.trim()
+}
+
+document.querySelector('#create').onclick = go;
+
+//перевод с морзянки на русский
+
+var morse = {
+    '.-': 'А', '-...': 'Б', '.--': 'В', '--.': 'Г', '-..': 'Д',
+    '.': 'Е', '...-': 'Ж', '--..': 'З', '..': 'И', '.---': 'Й',
+    '-.-': 'К', '.-..': 'Л', '--': 'М', '-.': 'Н', '---': 'О',
+    '.--.': 'П', '.-.': 'Р', '...': 'С', '-': 'Т', '..-': 'У',
+    '..-.': 'Ф', '....': 'Х', '-.-.': 'Ц', '---.': 'Ч',
+    '----': 'Ш', '--.-': 'Щ', '.--.-.': 'Ъ', '-.--': 'Ы', '-..-': 'Ь',
+    '..-..': 'Э', '..--': 'Ю', '.-.-': 'Я'
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var parts = t.split(' ')
+    var rStr = ''
+    for (let k = 0; k < parts.length; k++) {
+        let code = morse[parts[k]]
+        if (code == undefined) {
+            code = parts[k]
+        }
+        rStr = rStr + code
+    }
+    document.getElementById('res').textContent = rStr
+}
+
+document.querySelector('#create').onclick = go;
+				</code></pre>
+			</section>
+				<section data-menu-title="Конец!">
+					Спасибо за внимание!
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				controls: true,
+				center: false,
+				dependencies: [{
+					src: 'plugin/katex/katex.js',
+					async: true,
+				},{
+					src: 'plugin/fullscreen/fullscreen.js',
+				},{
+					src: 'plugin/menu/menu.js',
+				}],
+				menu: {
+					numbers: true,
+					markers: true,
+				},
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

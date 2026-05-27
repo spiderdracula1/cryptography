@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Азбука Морзе</title>
+<style>
+
+h1 {
+    text-align: center;
+    color: #eee8d5;
+}
+
+input[type="text"] {
+    width: 80%;
+    font-size: 16px;
+    padding: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    text-align: center;
+}
+div {
+    color: #eee8d5;
+    margin: 10px 0;
+}
+#res {
+    font-size: 1.2em;
+    font-family: monospace;
+}
+</style>
+
+</head>
+<body>
+
+<h1>АЗБУКА МОРЗЕ</h1>
+
+<input type="text" id="txt" value=".--. .-. .. .-- . -">
+
+<div class="center">
+    <input type="button" id="create" value="Перевести">
+</div>
+
+<div class="center">
+    Результат = <span id="res"></span>
+</div>
+
+<script>
+var morse = {
+    '.-': 'А', '-...': 'Б', '.--': 'В', '--.': 'Г', '-..': 'Д',
+    '.': 'Е', '...-': 'Ж', '--..': 'З', '..': 'И', '.---': 'Й',
+    '-.-': 'К', '.-..': 'Л', '--': 'М', '-.': 'Н', '---': 'О',
+    '.--.': 'П', '.-.': 'Р', '...': 'С', '-': 'Т', '..-': 'У',
+    '..-.': 'Ф', '....': 'Х', '-.-.': 'Ц', '---.': 'Ч',
+    '----': 'Ш', '--.-': 'Щ', '.--.-.': 'Ъ', '-.--': 'Ы', '-..-': 'Ь',
+    '..-..': 'Э', '..--': 'Ю', '.-.-': 'Я'
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var parts = t.split(' ')
+    var rStr = ''
+    for (let k = 0; k < parts.length; k++) {
+        let code = morse[parts[k]]
+        if (code == undefined) {
+            code = parts[k]
+        }
+        rStr = rStr + code
+    }
+    document.getElementById('res').textContent = rStr
+}
+
+document.querySelector('#create').onclick = go;
+</script>
+
+</body>
+</html>

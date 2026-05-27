@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шифр Цезаря</title>
+<style>
+
+h1 {
+    text-align: center;
+    color: #eee8d5;
+
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+textarea {
+    width: 300px;
+    height: 300px;
+    resize: none;
+}
+
+
+.center {
+    text-align: center;
+}
+div {
+    color: #eee8d5;
+}
+</style>
+
+</head>
+<body>
+
+<h1>ШИФР ЦЕЗАРЯ</h1>
+
+<table>
+<tr>
+    <td>
+        <textarea id="txt"></textarea>
+    </td>
+    <td class="center">
+        <div>Сдвиг</div>
+        <input type="number" id="sh" value="1" min="0" max="46">
+        <br><br>
+        <input type="button" id="create" value="Создать">
+    </td>
+    <td>
+        <textarea id="res" readonly></textarea>
+    </td>
+</tr>
+</table>
+
+<script>
+const abc = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789 ,.?'
+const n = 47
+
+function go() {
+    let t = document.getElementById('txt').value
+    let s = parseInt(document.getElementById('sh').value) || 0
+    let r = ''
+    for (let i = 0; i < t.length; i++) {
+        let p = abc.indexOf(t[i])
+        if (p == -1) {
+            r += t[i]
+        } else {
+            r += abc[(p + s + n) % n]
+        }
+    }
+    document.getElementById('res').value = r
+}
+
+document.querySelector('#create').onclick = go;
+</script>
+
+</body>
+</html>

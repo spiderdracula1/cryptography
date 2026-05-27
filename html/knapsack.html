@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ранцевый алгоритм</title>
+<style>
+
+h1 {
+    text-align: center;
+    color: #eee8d5;
+}
+
+input[type="text"] {
+    width: 80%;
+    font-size: 16px;
+    padding: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    text-align: center;
+}
+div {
+    color: #eee8d5;
+    margin: 10px 0;
+}
+#res {
+    font-size: 1.2em;
+}
+</style>
+
+
+</head>
+<body>
+
+<h1>РАНЦЕВЫЙ АЛГОРИТМ ШИФРОВАНИЯ</h1>
+
+<input type="text" id="txt" value="Привет">
+
+<div class="center">
+    q=257, r=3<br>
+    W=1,2,4,8,16,32,64,128
+</div>
+
+<div class="center">
+    <input type="button" id="create" value="Создать">
+</div>
+
+<div class="center">
+    Текст = <span id="res"></span>
+</div>
+
+<script>
+var W = [1,2,4,8,16,32,64,128]
+var q = 257
+var r = 3
+
+var B = []
+for (let i = 0; i < W.length; i++) {
+    B[i] = (W[i] * r) % q
+}
+
+var koi8 = {
+    'А':225,'Б':226,'В':247,'Г':231,'Д':228,'Е':229,'Ё':163,
+    'Ж':246,'З':250,'И':233,'Й':234,'К':235,'Л':236,'М':237,
+    'Н':238,'О':239,'П':240,'Р':242,'С':243,'Т':244,'У':245,
+    'Ф':230,'Х':232,'Ц':227,'Ч':254,'Ш':251,'Щ':253,'Ъ':255,
+    'Ы':249,'Ь':248,'Э':252,'Ю':224,'Я':241,
+    'а':193,'б':194,'в':215,'г':199,'д':196,'е':197,'ё':179,
+    'ж':214,'з':218,'и':201,'й':202,'к':203,'л':204,'м':205,
+    'н':206,'о':207,'п':208,'р':210,'с':211,'т':212,'у':213,
+    'ф':198,'х':200,'ц':195,'ч':222,'ш':219,'щ':221,'ъ':223,
+    'ы':217,'ь':216,'э':220,'ю':192,'я':209
+}
+
+function go() {
+    var t = document.getElementById('txt').value
+    var rStr = ''
+    for (let k = 0; k < t.length; k++) {
+        let ch = t[k]
+        let code = ch.charCodeAt(0)
+        if (code > 127) {
+            code = koi8[ch]
+            if (code == undefined) {
+                code = 63
+            }
+        }
+        let sum = 0
+        for (let i = 0; i < 8; i++) {
+            if ((code >> (7 - i)) & 1) {
+                sum = sum + B[i]
+            }
+        }
+        rStr = rStr + String.fromCharCode(sum % q)
+    }
+    document.getElementById('res').textContent = rStr
+}
+
+document.querySelector('#create').onclick = go;
+</script>
+
+</body>
+</html>
